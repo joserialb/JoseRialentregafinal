@@ -1,0 +1,28 @@
+.item-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    margin: 10px;
+  }
+  
+  .item-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .item-detail-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .item-detail-link:hover {
+    background-color: #0056b3;
+  }
+  

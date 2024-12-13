@@ -1,0 +1,19 @@
+.item-list {
+    display: grid; /* Usamos CSS Grid */
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas con tamaño igual */
+    gap: 20px; /* Espacio entre las columnas y filas */
+    padding: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .item-list {
+      grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .item-list {
+      grid-template-columns: 1fr; /* 1 columna en pantallas pequeñas */
+    }
+  }
+  

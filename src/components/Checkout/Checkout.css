@@ -1,0 +1,41 @@
+.checkout-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .checkout-form input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .checkout-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .checkout-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .checkout-summary ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .checkout-summary ul li {
+    margin: 5px 0;
+  }
+  
+  .checkout-success {
+    text-align: center;
+  }
+  
