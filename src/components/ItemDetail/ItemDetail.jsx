@@ -1,32 +1,36 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
-import "./ItemDetail.css";
 
-const ItemDetail = ({ id, name, price, description, image, category }) => {
+const ItemDetail = ({ id, name, price, image, description }) => {
+  const { addToCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useContext(CartContext);
 
   const handleAddToCart = () => {
-    addItem({ id, name, price, image, category }, quantity);
+    console.log("Adding product to cart:", { id, name, price, quantity });
+    addToCart({ id, name, price, image }, quantity);
   };
 
   return (
-    <div className="item-detail">
-      <img src={image} alt={name} className="item-detail-image" />
+    <div>
       <h2>{name}</h2>
-      <p>Categoría: {category}</p>
-      <p>Precio: ${price.toFixed(2)}</p>
+      <img src={image} alt={name} style={{ width: "200px" }} />
       <p>{description}</p>
-      <input
-        type="number"
-        min="1"
-        value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-      />
-      <button onClick={handleAddToCart}>Agregar al Carrito</button>
+      <p>Price: ${price}</p>
+      <div>
+        <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+        <span>{quantity}</span>
+        <button onClick={() => setQuantity(quantity + 1)}>+</button>
+      </div>
+      <button onClick={handleAddToCart}>Add to Cart</button>
     </div>
   );
 };
 
 export default ItemDetail;
+
+
+
+
+
+
 

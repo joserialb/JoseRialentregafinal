@@ -5,8 +5,13 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import "./Checkout.css";
 
 const Checkout = () => {
-  const { cart, clearCart, getTotalPrice } = useContext(CartContext);
-  const [buyer, setBuyer] = useState({ name: "", phone: "", email: "", confirmEmail: "" });
+  const { cart, clearCart, totalPrice } = useContext(CartContext);
+  const [buyer, setBuyer] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    confirmEmail: "",
+  });
   const [orderId, setOrderId] = useState(null);
 
   const handleInputChange = (e) => {
@@ -23,9 +28,18 @@ const Checkout = () => {
     }
 
     const order = {
-      buyer: { name: buyer.name, phone: buyer.phone, email: buyer.email },
-      items: cart.map((item) => ({ id: item.id, name: item.name, price: item.price, quantity: item.quantity })),
-      total: getTotalPrice(),
+      buyer: {
+        name: buyer.name,
+        phone: buyer.phone,
+        email: buyer.email,
+      },
+      items: cart.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      total: totalPrice(),
       date: Timestamp.fromDate(new Date()),
     };
 
@@ -42,7 +56,9 @@ const Checkout = () => {
     return (
       <div className="checkout-success">
         <h2>¡Gracias por tu compra!</h2>
-        <p>Tu ID de orden es: <strong>{orderId}</strong></p>
+        <p>
+          Tu ID de orden es: <strong>{orderId}</strong>
+        </p>
         <a href="/">Volver al inicio</a>
       </div>
     );
@@ -95,10 +111,16 @@ const Checkout = () => {
             </li>
           ))}
         </ul>
-        <h3>Total: ${getTotalPrice()}</h3>
+        <h3>Total: ${totalPrice()}</h3>
       </div>
     </div>
   );
 };
 
 export default Checkout;
+
+
+
+
+
+
