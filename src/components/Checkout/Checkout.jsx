@@ -6,13 +6,18 @@ import "./Checkout.css";
 
 const Checkout = () => {
   const { cart, clearCart, totalPrice } = useContext(CartContext);
-  const [buyer, setBuyer] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    confirmEmail: "",
-  });
+  const [buyer, setBuyer] = useState({ name: "", phone: "", email: "", confirmEmail: "" });
   const [orderId, setOrderId] = useState(null);
+  const [errors, setErrors] = useState({});
+
+  const validateFields = () => {
+    const newErrors = {};
+    if (!/^[a-zA-Z\s]+$/.test(buyer.name)) newErrors.name = "El nombre solo debe contener letras y espacios.";
+    if (!/^\d+$/.test(buyer.phone)) newErrors.phone = "El teléfono solo debe contener números.";
+    if (!/^\S+@\S+\.\S+$/.test(buyer.email)) newErrors.email = "El correo electrónico no es válido.";
+    if (buyer.email !== buyer.confirmEmail) newErrors.confirmEmail = "Los correos electrónicos no coinciden.";
+    return newErrors;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,24 +26,15 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (buyer.email !== buyer.confirmEmail) {
-      alert("Los correos electrónicos no coinciden.");
+    const validationErrors = validateFields();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
     const order = {
-      buyer: {
-        name: buyer.name,
-        phone: buyer.phone,
-        email: buyer.email,
-      },
-      items: cart.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      })),
+      buyer: { name: buyer.name, phone: buyer.phone, email: buyer.email },
+      items: cart.map((item) => ({ id: item.id, name: item.name, price: item.price, quantity: item.quantity })),
       total: totalPrice(),
       date: Timestamp.fromDate(new Date()),
     };
@@ -47,8 +43,10 @@ const Checkout = () => {
       const docRef = await addDoc(collection(db, "orders"), order);
       setOrderId(docRef.id);
       clearCart();
-    } catch (error) {
+      toast.success("Orden generada con éxito. Gracias por tu compra!");
+    } catch (error) {    
       console.error("Error al generar la orden: ", error);
+      toast.error("Error al generar la orden. Inténtalo de nuevo.");
     }
   };
 
@@ -56,9 +54,7 @@ const Checkout = () => {
     return (
       <div className="checkout-success">
         <h2>¡Gracias por tu compra!</h2>
-        <p>
-          Tu ID de orden es: <strong>{orderId}</strong>
-        </p>
+        <p>Tu ID de orden es: <strong>{orderId}</strong></p>
         <a href="/">Volver al inicio</a>
       </div>
     );
@@ -76,6 +72,8 @@ const Checkout = () => {
           onChange={handleInputChange}
           required
         />
+        {errors.name && <p className="error">{errors.name}</p>}
+
         <input
           type="tel"
           name="phone"
@@ -84,6 +82,8 @@ const Checkout = () => {
           onChange={handleInputChange}
           required
         />
+        {errors.phone && <p className="error">{errors.phone}</p>}
+
         <input
           type="email"
           name="email"
@@ -92,6 +92,8 @@ const Checkout = () => {
           onChange={handleInputChange}
           required
         />
+        {errors.email && <p className="error">{errors.email}</p>}
+
         <input
           type="email"
           name="confirmEmail"
@@ -100,6 +102,8 @@ const Checkout = () => {
           onChange={handleInputChange}
           required
         />
+        {errors.confirmEmail && <p className="error">{errors.confirmEmail}</p>}
+
         <button type="submit">Realizar Compra</button>
       </form>
       <div className="checkout-summary">
@@ -118,6 +122,7 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
 
 
 

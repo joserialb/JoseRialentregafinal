@@ -79,6 +79,7 @@ button:focus-visible {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 p {
+  text-align: -webkit-match-parent;
   text-align: match-parent;
 }
 .table {
@@ -91,7 +92,9 @@ p {
   text-align: left;
   border: 1px solid #ddd;
 }
-
+*:focus {
+  outline: none; 
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #212529;

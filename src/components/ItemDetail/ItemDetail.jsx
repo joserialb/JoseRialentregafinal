@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import "./ItemDetail.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ItemDetail = ({ product }) => {
   const { addToCart } = useContext(CartContext);
@@ -13,6 +15,7 @@ const ItemDetail = ({ product }) => {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
+    toast.success("Producto agregado al carrito con éxito!");
     console.log("Producto agregado al carrito:", product, "Cantidad:", quantity);
   };
 
