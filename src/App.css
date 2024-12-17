@@ -41,6 +41,9 @@
   color: #888;
 }
 body {
-  -webkit-text-size-adjust: 100%; /* Para Safari */
-  text-size-adjust: 100%; /* Para otros navegadores */
+  -webkit-text-size-adjust: 100%; 
+  text-size-adjust: 100%; 
+}
+p {
+  text-align: match-parent; 
 }

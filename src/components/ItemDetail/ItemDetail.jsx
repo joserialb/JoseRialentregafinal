@@ -1,32 +1,45 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import "./ItemDetail.css";
 
-const ItemDetail = ({ id, name, price, image, description }) => {
+const ItemDetail = ({ product }) => {
   const { addToCart } = useContext(CartContext);
+
+  if (!product || !product.name || !product.image) {
+    return <p>Producto no válido.</p>;
+  }
+
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
-    console.log("Adding product to cart:", { id, name, price, quantity });
-    addToCart({ id, name, price, image }, quantity);
+    addToCart(product, quantity);
+    console.log("Producto agregado al carrito:", product, "Cantidad:", quantity);
   };
 
   return (
-    <div>
-      <h2>{name}</h2>
-      <img src={image} alt={name} style={{ width: "200px" }} />
-      <p>{description}</p>
-      <p>Price: ${price}</p>
-      <div>
-        <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
-        <span>{quantity}</span>
-        <button onClick={() => setQuantity(quantity + 1)}>+</button>
+    <div className="item-detail-container">
+      <img src={product.image} alt={product.name} className="item-detail-image" />
+      <div className="item-detail-info">
+        <h2 className="item-detail-name">{product.name}</h2>
+        <p className="item-detail-description">{product.description}</p>
+        <p className="item-detail-price">Precio: ${product.price}</p>
+        <div className="quantity-controls">
+          <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="quantity-btn">-</button>
+          <span className="quantity-display">{quantity}</span>
+          <button onClick={() => setQuantity(quantity + 1)} className="quantity-btn">+</button>
+        </div>
+        <button onClick={handleAddToCart} className="add-to-cart-btn">
+          Agregar al carrito
+        </button>
       </div>
-      <button onClick={handleAddToCart}>Add to Cart</button>
     </div>
   );
 };
 
 export default ItemDetail;
+
+
+
 
 
 

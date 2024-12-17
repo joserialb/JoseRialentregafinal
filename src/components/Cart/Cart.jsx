@@ -1,46 +1,70 @@
 import React, { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import { Link } from "react-router-dom";
+import "./Cart.css";
 
 const Cart = () => {
-  const { cart, removeItem, clearCart, totalPrice } = useContext(CartContext);
+  const { cart, totalPrice, removeItem, clearCart } = useContext(CartContext);
 
-  if (!cart || cart.length === 0) {
+  if (!cart.length) {
     return (
-      <div>
-        <h2>El carrito está vacío</h2>
-        <Link to="/">Volver a la tienda</Link>
+      <div className="container mt-5 text-center">
+        <h2>Tu carrito está vacío</h2>
+        <Link to="/" className="btn btn-primary mt-3">
+          Ir a la tienda
+        </Link>
       </div>
     );
   }
 
   return (
-    <div>
-      <h2>Tu Carrito</h2>
-      <ul>
-        {cart.map((item) => (
-          <li key={item.id}>
-            <img src={item.image} alt={item.name} style={{ width: "50px" }} />
-            <div>
-              <h4>{item.name}</h4>
-              <p>Cantidad: {item.quantity}</p>
-              <p>Precio unitario: ${item.price.toFixed(2)}</p>
-              <p>Subtotal: ${(item.price * item.quantity).toFixed(2)}</p>
-              <button onClick={() => removeItem(item.id)}>Eliminar</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className="container mt-4">
+      <h2 className="mb-4">Tu Carrito</h2>
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cart.map((item) => (
+            <tr key={item.id}>
+              <td>{item.name}</td>
+              <td>{item.quantity}</td>
+              <td>${item.price.toFixed(2)}</td>
+              <td>${(item.price * item.quantity).toFixed(2)}</td>
+              <td>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => removeItem(item.id)}
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <h3>Total: ${totalPrice().toFixed(2)}</h3>
-      <button onClick={clearCart}>Vaciar Carrito</button>
-      <Link to="/checkout">
-        <button>Proceder al Checkout</button>
-      </Link>
+      <div className="d-flex justify-content-between mt-4">
+        <button className="btn btn-danger" onClick={clearCart}>
+          Vaciar Carrito
+        </button>
+        <Link to="/checkout" className="btn btn-success">
+          Proceder al Checkout
+        </Link>
+      </div>
     </div>
   );
 };
 
 export default Cart;
+
+
 
 
 

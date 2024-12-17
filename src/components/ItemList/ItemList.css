@@ -1,19 +1,41 @@
-.item-list {
-    display: grid; /* Usamos CSS Grid */
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas con tamaño igual */
-    gap: 20px; /* Espacio entre las columnas y filas */
-    padding: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    .item-list {
-      grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .item-list {
-      grid-template-columns: 1fr; /* 1 columna en pantallas pequeñas */
-    }
-  }
-  
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 15px;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.product-image {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #007bff;
+}

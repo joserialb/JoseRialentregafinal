@@ -1,53 +1,34 @@
 .navbar {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
 }
 
 .navbar ul {
-  list-style: none;
   display: flex;
-  gap: 20px; /* Espacio entre los enlaces */
-  padding: 0;
+  list-style: none;
   margin: 0;
-}
-
-.navbar li {
-  display: inline;
+  padding: 0;
+  gap: 20px;
 }
 
 .navbar a {
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .navbar a:hover {
+  color: #ffdd00;
   text-decoration: underline;
 }
 
 .active-link {
   font-weight: bold;
   text-decoration: underline;
-  color: #ffdd00; /* Amarillo para destacar */
-}
-
-.navbar-logo {
-  font-size: 1.5rem;
-}
-
-.cart-widget {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  color: white;
-  cursor: pointer;
-}
-
-.cart-widget span {
-  margin-left: 5px;
-  font-size: 1rem;
+  color: #ffdd00;
 }

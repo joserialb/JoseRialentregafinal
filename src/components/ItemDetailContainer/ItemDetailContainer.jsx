@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ItemDetail from "../ItemDetail/ItemDetail";
 import { db } from "../../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
+import ItemDetail from "../ItemDetail/ItemDetail";
 
 const ItemDetailContainer = () => {
-  const { id } = useParams(); // Obtén el ID desde la URL
-  const [product, setProduct] = useState(null); // Estado del producto
-  const [loading, setLoading] = useState(true); // Controla la carga
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProduct = async () => {
-      setLoading(true);
-      console.log("ID desde la URL:", id);
-
       try {
-        const docRef = doc(db, "products", id); // Busca en Firestore usando el ID
+        console.log("ID desde la URL:", id);
+        const docRef = doc(db, "products", id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setProduct({ id: docSnap.id, ...docSnap.data() });
+          const productData = { id: docSnap.id, ...docSnap.data() };
+          console.log("Producto encontrado:", productData);
+          setProduct(productData);
         } else {
-          console.error("Producto no encontrado en Firestore");
+          console.log("Producto no encontrado");
+          setProduct(null);
         }
       } catch (error) {
         console.error("Error al obtener el producto:", error);
-        console.log("Producto obtenido:", product);
-
+        setProduct(null);
       } finally {
         setLoading(false);
       }
@@ -36,20 +36,14 @@ const ItemDetailContainer = () => {
   }, [id]);
 
   if (loading) {
-    return <p>Cargando detalles...</p>;
-  }
-
-  if (!product) {
-    return <p>El producto no existe o no se encontró.</p>;
+    return <p>Cargando producto...</p>;
   }
 
   return (
     <div>
-      <ItemDetail {...product} />
+      {product ? <ItemDetail product={product} /> : <p>Producto no encontrado.</p>}
     </div>
   );
 };
 
 export default ItemDetailContainer;
-
-
